@@ -44,3 +44,34 @@ function playRound(playerSelection, computerSelection) {
   }
   return result;
 }
+
+function game() {
+  let round_result;
+  let computerSelection;
+  let playerSelection;
+
+  let user_score = 0;
+  let computer_score = 0;
+
+  while (user_score < 5 && computer_score < 5) {
+    computerSelection = getComputerChoice();
+    playerSelection = getPlayerChoice();
+
+    round_result = playRound(playerSelection, computerSelection);
+    if (round_result == 1) {
+      user_score++;
+    } else if (round_result == 0) {
+      computer_score++;
+    }
+  }
+
+  console.log("Score: User " + user_score + " :", "Computer " + computer_score);
+
+  if (user_score > computer_score) {
+    console.log("You Won!!!");
+  } else if (user_score < computer_score) {
+    console.log("You Lost!");
+  }
+}
+
+console.log(game());
