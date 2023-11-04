@@ -12,6 +12,20 @@ function getComputerChoice() {
   return computer_choice;
 }
 
+function getPlayerChoice() {
+  let player_choice;
+
+  do {
+    player_choice = prompt("Write Rock, paper or scissors").toLowerCase();
+  } while (
+    player_choice != "rock" &&
+    player_choice != "paper" &&
+    player_choice != "scissors"
+  );
+
+  return player_choice;
+}
+
 function playRound(playerSelection, computerSelection) {
   let result;
 
