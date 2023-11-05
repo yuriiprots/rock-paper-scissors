@@ -1,10 +1,12 @@
 function getComputerChoice() {
-  // Expected output: 0, 1 or 2
-  let number = Math.floor(Math.random() * 3);
+  let computer_choice;
 
-  if (number == 0) {
+  // Expected output: 1, 2 or 3
+  const number = Math.floor(1 + Math.random() * 3);
+
+  if (number === 1) {
     computer_choice = "rock";
-  } else if (number == 1) {
+  } else if (number === 2) {
     computer_choice = "paper";
   } else {
     computer_choice = "scissors";
@@ -15,53 +17,49 @@ function getComputerChoice() {
 function getPlayerChoice() {
   let player_choice;
 
-  do {
-    player_choice = prompt("Write Rock, paper or scissors").toLowerCase();
-  } while (
+  while (
     player_choice != "rock" &&
     player_choice != "paper" &&
     player_choice != "scissors"
-  );
+  ) {
+    player_choice = prompt("Write Rock, paper or scissors").toLowerCase();
+  }
 
   return player_choice;
 }
 
 function playRound(playerSelection, computerSelection) {
-  let result;
+  let result = 0;
 
-  if (
-    (playerSelection == "rock" && computerSelection == "scissors") ||
-    (playerSelection == "scissors" && computerSelection == "paper") ||
-    (playerSelection == "paper" && computerSelection == "rock")
-  ) {
-    console.log("You Won! " + playerSelection + " beats " + computerSelection);
-    result = 1;
-  }
-  if (
-    (playerSelection == "rock" && computerSelection == "rock") ||
-    (playerSelection == "scissors" && computerSelection == "scissors") ||
-    (playerSelection == "paper" && computerSelection == "paper")
-  ) {
+  if (playerSelection === computerSelection) {
     console.log(
       "It's a tie! " + playerSelection + " ties with " + computerSelection
     );
+    result = "tie"
   }
-  if (
-    (playerSelection == "rock" && computerSelection == "paper") ||
-    (playerSelection == "scissors" && computerSelection == "rock") ||
-    (playerSelection == "paper" && computerSelection == "scissors")
+  
+  else if (
+    (playerSelection === "rock" && computerSelection === "scissors") ||
+    (playerSelection === "scissors" && computerSelection === "paper") ||
+    (playerSelection === "paper" && computerSelection === "rock")
   ) {
+    console.log("You Won! " + playerSelection + " beats " + computerSelection);
+    result = "won";
+  }
+  
+  else {
     console.log(
       "You Lost! " + playerSelection + " is beaten by " + computerSelection
     );
-    result = 0;
+    result = "lost";
   }
   return result;
 }
 
 function game() {
-  let play_again = "yes";
-  do {
+  let play_again = true;
+
+  while (play_again === true) {
     let round_result;
     let computerSelection;
     let playerSelection;
@@ -74,9 +72,10 @@ function game() {
       playerSelection = getPlayerChoice();
 
       round_result = playRound(playerSelection, computerSelection);
-      if (round_result == 1) {
+      console.log(round_result);
+      if (round_result === "won") {
         user_score++;
-      } else if (round_result == 0) {
+      } else if (round_result === "lost") {
         computer_score++;
       }
     }
@@ -91,11 +90,8 @@ function game() {
     } else if (user_score < computer_score) {
       console.log("You Lost!");
     }
-
-    do {
-      play_again = prompt("Play again? Write yes or no").toLowerCase();
-    } while (play_again != "yes" && play_again != "no");
-  } while (play_again == "yes");
+    play_again = confirm("Play again?");
+  }
 }
 
 console.log(game());
