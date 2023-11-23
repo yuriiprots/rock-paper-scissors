@@ -51,15 +51,6 @@
         </div>
       </section>
 
-      <div class="popup" id="popup">
-        <h2 id="popup_game_result" class="popup__header">Game Result...</h2>
-        <button type="button" class="popup__btn" onclick="closePopup()">
-          Play again
-        </button>
-      </div>
-
-      <div id="overlay"></div>
-
       <section class="selections_container">
         <button class="select_btn" id="btn_rock">✊</button>
         <button class="select_btn" id="btn_paper">✋</button>
@@ -71,10 +62,20 @@
       <p>
         Copyright &copy 2023 yuriiprots
         <a href="https://github.com/yuriiprots" target="_blank">
-          <i class=" fab fa-github" aria-hidden="true"></i
+          <i class="fab fa-github" aria-hidden="true"></i
         ></a>
       </p>
     </footer>
+
+    <div class="popup" id="popup">
+      <h2 id="popup_game_result" class="popup__header">Game Result...</h2>
+      <button type="button" class="popup__btn" onclick="closePopup()">
+        Play again
+      </button>
+    </div>
+
+    <div id="overlay"></div>
+
     <script src="./script.js"></script>
   </body>
 </html>
