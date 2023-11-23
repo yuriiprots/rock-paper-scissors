@@ -1,11 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rock Paper Scissors</title>
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="title">ROCK PAPER SCISSORS</h1>
+    </header>
+
+    <main class="main">
+      <section class="round_result">
+        <h3 id="header_round_result" class="round_result__header">
+          Choose your weapon
+        </h3>
+        <p id="paragraph_round_result" class="round_result__paragraph">
+          First to score 5 points wins the game
+        </p>
+      </section>
+
+
+      <section class="scores_container">
+        <div class="user_score_container">
+          <p id="user_round_weapon" class="round_weapon">❔</p>
+          <p class="user_score__paragraph">Player: <span id="user_score">0</span></p> 
+        </div>
+        <!-- user_score ==> user_score__number -->
+
+        <div class="computer_score_container">
+          <p id="computer_round_weapon" class="round_weapon">❔</p>
+          <p class="computer_score__paragraph">Computer: <span id="computer_score">0</span></p>
+        </div>
+      </section>
+
+
+
+      <div class="popup" id="popup">
+        <h2 id="popup_game_result">Game Result...</h2>
+        <button type="button" class="btn" onclick="closePopup()">
+          Play again
+        </button>
+      </div>
+
+      <div id="overlay"></div>
+
+      <section class="selections_container">
+        <button class="select_btn" id="btn_rock">✊</button>
+        <button class="select_btn" id="btn_paper">✋</button>
+        <button class="select_btn" id="btn_scissors">✌️</button>
+      </section>
+    </main>
+
+    <footer>
+      <p>Copyright &copy 2023 yuriiprots <a href=""></a></p>
+    </footer>
+
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>
