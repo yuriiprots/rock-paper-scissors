@@ -10,6 +10,7 @@ body {
   color: #dddddd;
   font-family: "Roboto", sans-serif;
   background-color: #222831;
+  text-align: center;
 }
 
 .header {
@@ -35,10 +36,6 @@ body {
   gap: 40px;
 }
 
-.round_result {
-  text-align: center;
-}
-
 .round_result__header {
   font-size: 32px;
   margin-bottom: 10px;
@@ -49,7 +46,6 @@ body {
 }
 
 .scores_container {
-  text-align: center;
   display: flex;
   justify-content: space-evenly;
 }
@@ -57,7 +53,6 @@ body {
 .user_score__paragraph,
 .computer_score__paragraph {
   font-size: 20px;
-  text-align: center;
 }
 
 .round_weapon {
@@ -67,15 +62,13 @@ body {
 }
 
 .popup {
-  width: 300px;
-  height: 150px;
-  background: darkgray;
-  border-radius: 6px;
-  position: absolute;
-  top: 0;
+  width: 330px;
+  height: 200px;
+  background: #222831;
+  border-radius: 12px;
+  position: fixed;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  text-align: center;
   visibility: hidden;
   transition: transform 0.4s, top 0.4s;
   z-index: 2;
@@ -83,8 +76,27 @@ body {
 
 .open-popup {
   visibility: visible;
-  top: 50%;
+  top: 47%;
   transform: translate(-50%, -50%) scale(1);
+}
+
+.popup__header {
+  font-size: 38px;
+  margin: 30px 0;
+}
+
+.popup__btn {
+  background: #393e46;
+  color: #dddddd;
+  font-size: 28px;
+  padding: 15px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.popup__btn:hover {
+  background: #4a4f57;
 }
 
 #overlay {
@@ -103,15 +115,6 @@ body {
   pointer-events: all;
 }
 
-.btn {
-  margin-top: 20px;
-  border: 0;
-  outline: none;
-  font-size: 24px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .selections_container {
   display: flex;
   justify-content: space-evenly;
@@ -119,7 +122,6 @@ body {
 
 .select_btn {
   background-color: #393e46;
-  text-align: center;
   font-size: 78px;
   border: 0;
   border-radius: 10px;
@@ -130,8 +132,4 @@ body {
 
 .select_btn:hover {
   background-color: #4a4f57;
-}
-
-footer {
-  text-align: center;
 }
