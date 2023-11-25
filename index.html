@@ -27,10 +27,10 @@
 
     <main class="main">
       <section class="round_result">
-        <h3 id="header_round_result" class="round_result__header">
+        <h3 id="header_round_result" class="round_result_header">
           Choose your weapon
         </h3>
-        <p id="paragraph_round_result" class="round_result__paragraph">
+        <p id="paragraph_round_result" class="round_result_paragraph">
           First to score 5 points wins the game
         </p>
       </section>
@@ -38,15 +38,15 @@
       <section class="scores_container">
         <div class="user_score_container">
           <p id="user_round_weapon" class="round_weapon">❔</p>
-          <p class="user_score__paragraph">
-            Player: <span id="user_score">0</span>
+          <p class="user_score_paragraph">
+            Player: <span id="user_score_number">0</span>
           </p>
         </div>
 
         <div class="computer_score_container">
           <p id="computer_round_weapon" class="round_weapon">❔</p>
-          <p class="computer_score__paragraph">
-            Computer: <span id="computer_score">0</span>
+          <p class="computer_score_paragraph">
+            Computer: <span id="computer_score_number">0</span>
           </p>
         </div>
       </section>
@@ -68,10 +68,8 @@
     </footer>
 
     <div class="popup" id="popup">
-      <h2 id="popup_game_result" class="popup__header">Game Result...</h2>
-      <button type="button" class="popup__btn" onclick="closePopup()">
-        Play again
-      </button>
+      <h2 id="popup_game_result" class="popup_header">Game Result...</h2>
+      <button type="button" id="popup_btn" class="popup_btn">Play again</button>
     </div>
 
     <div id="overlay"></div>
