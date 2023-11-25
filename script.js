@@ -1,97 +1,162 @@
-function getComputerChoice() {
-  let computer_choice;
+const btnRock = document.querySelector("#btn_rock");
+const btnPaper = document.querySelector("#btn_paper");
+const btnScissors = document.querySelector("#btn_scissors");
 
-  // Expected output: 1, 2 or 3
-  const number = Math.floor(1 + Math.random() * 3);
+const headerRoundResult = document.querySelector("#header_round_result");
+const paragraphRoundResult = document.querySelector("#paragraph_round_result");
+const userRoundWeapon = document.querySelector("#user_round_weapon");
+const computerRoundWeapon = document.querySelector("#computer_round_weapon");
+const userScoreNumber = document.querySelector("#user_score_number");
+const computerScoreNumber = document.querySelector("#computer_score_number");
 
-  if (number === 1) {
-    computer_choice = "rock";
-  } else if (number === 2) {
-    computer_choice = "paper";
-  } else {
-    computer_choice = "scissors";
-  }
-  return computer_choice;
+const popup = document.querySelector("#popup");
+const btnPopup = document.querySelector("#popup_btn");
+const overlay = document.querySelector("#overlay");
+
+const popupGameResult = document.querySelector("#popup_game_result");
+
+let userScore = 0;
+let computerScore = 0;
+
+btnRock.addEventListener("click", rockClickHandler);
+btnPaper.addEventListener("click", paperClickHandler);
+btnScissors.addEventListener("click", scissorsClickHandler);
+btnPopup.addEventListener("click", closePopup);
+
+function rockClickHandler() {
+  playRound("rock", getComputerChoice());
+  setWeaponInnerHTML(userRoundWeapon, "rock");
 }
 
-function getPlayerChoice() {
-  let player_choice;
+function paperClickHandler() {
+  playRound("paper", getComputerChoice());
+  setWeaponInnerHTML(userRoundWeapon, "paper");
+}
 
-  while (
-    player_choice != "rock" &&
-    player_choice != "paper" &&
-    player_choice != "scissors"
-  ) {
-    player_choice = prompt("Write Rock, paper or scissors").toLowerCase();
-  }
+function scissorsClickHandler() {
+  playRound("scissors", getComputerChoice());
+  setWeaponInnerHTML(userRoundWeapon, "scissors");
+}
 
-  return player_choice;
+function randomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1 + min));
+}
+
+function getComputerChoice() {
+  let computerChoice;
+  const weapons = ["rock", "paper", "scissors"];
+  const randomNumber = randomInteger(0, 2);
+  computerChoice = weapons[randomNumber];
+  setWeaponInnerHTML(computerRoundWeapon, computerChoice);
+  return computerChoice;
+}
+
+function setWeaponInnerHTML(element, weapon) {
+  element.innerHTML =
+    weapon === "rock"
+      ? "✊"
+      : weapon === "paper"
+      ? "✋"
+      : weapon === "scissors"
+      ? "✌️"
+      : "❔";
+  return element.innerHTML;
 }
 
 function playRound(playerSelection, computerSelection) {
-  let result = 0;
+  let roundResult;
 
   if (playerSelection === computerSelection) {
-    console.log(
-      "It's a tie! " + playerSelection + " ties with " + computerSelection
-    );
-    result = "tie"
-  }
-  
-  else if (
+    headerRoundResult.innerText = "It's a tie!";
+    paragraphRoundResult.innerText = `${
+      playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)
+    } ties with ${computerSelection}`;
+
+    roundResult = "tie";
+  } else if (
     (playerSelection === "rock" && computerSelection === "scissors") ||
     (playerSelection === "scissors" && computerSelection === "paper") ||
     (playerSelection === "paper" && computerSelection === "rock")
   ) {
-    console.log("You Won! " + playerSelection + " beats " + computerSelection);
-    result = "won";
+    headerRoundResult.innerText = "You won!";
+    paragraphRoundResult.innerText = `${
+      playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)
+    } beats ${computerSelection}`;
+    roundResult = "won";
+  } else {
+    headerRoundResult.innerText = "You lost!";
+    paragraphRoundResult.innerText = `${
+      playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)
+    } is beaten by ${computerSelection}`;
+    roundResult = "lost";
   }
-  
-  else {
-    console.log(
-      "You Lost! " + playerSelection + " is beaten by " + computerSelection
-    );
-    result = "lost";
-  }
-  return result;
+  updateScore(roundResult);
 }
 
-function game() {
-  let play_again = true;
+function updateScore(roundResult) {
+  if (roundResult === "won") {
+    userScore++;
+    userScoreNumber.innerHTML = userScore;
+  } else if (roundResult === "lost") {
+    computerScore++;
+    computerScoreNumber.innerHTML = computerScore;
+  }
+  checkWinner(userScore, computerScore);
+}
 
-  while (play_again === true) {
-    let round_result;
-    let computerSelection;
-    let playerSelection;
-
-    let user_score = 0;
-    let computer_score = 0;
-
-    while (user_score < 5 && computer_score < 5) {
-      computerSelection = getComputerChoice();
-      playerSelection = getPlayerChoice();
-
-      round_result = playRound(playerSelection, computerSelection);
-      console.log(round_result);
-      if (round_result === "won") {
-        user_score++;
-      } else if (round_result === "lost") {
-        computer_score++;
-      }
-    }
-
-    console.log(
-      "Score: User " + user_score + " :",
-      "Computer " + computer_score
-    );
-
-    if (user_score > computer_score) {
-      console.log("You Won!!!");
-    } else if (user_score < computer_score) {
-      console.log("You Lost!");
-    }
-    play_again = confirm("Play again?");
+function checkWinner(userScore, computerScore) {
+  if (userScore >= 5 || computerScore >= 5) {
+    openPopup();
+    changeEventListener(true);
   }
 }
 
-console.log(game());
+function openPopup() {
+  popup.classList.add("open-popup");
+  overlay.classList.add("active");
+
+  if (userScore >= 5) {
+    popupGameResult.innerHTML = "You won!";
+  } else if (computerScore >= 5) {
+    popupGameResult.innerHTML = "You lost...";
+  }
+}
+
+function changeEventListener(isChanging) {
+  btnRock.removeEventListener("click", rockClickHandler);
+  btnRock.removeEventListener("click", openPopup);
+  const rockHandler = isChanging ? openPopup : rockClickHandler;
+  btnRock.addEventListener("click", rockHandler);
+
+  btnPaper.removeEventListener("click", paperClickHandler);
+  btnPaper.removeEventListener("click", openPopup);
+  const paperHandler = isChanging ? openPopup : paperClickHandler;
+  btnPaper.addEventListener("click", paperHandler);
+
+  btnScissors.removeEventListener("click", scissorsClickHandler);
+  btnScissors.removeEventListener("click", openPopup);
+  const scissorsHandler = isChanging ? openPopup : scissorsClickHandler;
+  btnScissors.addEventListener("click", scissorsHandler);
+}
+
+overlay.addEventListener("click", overlayClickHandler);
+
+function overlayClickHandler() {
+  popup.classList.remove("open-popup");
+  overlay.classList.remove("active");
+}
+
+function closePopup() {
+  headerRoundResult.innerText = "Choose your weapon";
+  paragraphRoundResult.innerText = "First to score 5 points wins the game";
+  userScore = 0;
+  computerScore = 0;
+
+  userScoreNumber.innerHTML = userScore;
+  computerScoreNumber.innerHTML = computerScore;
+
+  setWeaponInnerHTML(userRoundWeapon, "sign");
+  setWeaponInnerHTML(computerRoundWeapon, "sign");
+  overlayClickHandler();
+  changeEventListener(false);
+}
