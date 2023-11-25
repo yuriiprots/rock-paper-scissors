@@ -26,18 +26,16 @@ btnPopup.addEventListener("click", closePopup);
 function rockClickHandler() {
   playRound("rock", getComputerChoice());
   setWeaponInnerHTML(userRoundWeapon, "rock");
-  userRoundWeapon.innerHTML = "✊";
 }
 
 function paperClickHandler() {
   playRound("paper", getComputerChoice());
   setWeaponInnerHTML(userRoundWeapon, "paper");
-  userRoundWeapon.innerHTML = "✋";
 }
 
 function scissorsClickHandler() {
   playRound("scissors", getComputerChoice());
-  userRoundWeapon.innerHTML = "✌️";
+  setWeaponInnerHTML(userRoundWeapon, "scissors");
 }
 
 function randomInteger(min, max) {
@@ -46,19 +44,23 @@ function randomInteger(min, max) {
 
 function getComputerChoice() {
   let computerChoice;
-  const randomNumber = randomInteger(1, 3);
-
-  if (randomNumber === 1) {
-    computerChoice = "rock";
-    computerRoundWeapon.innerHTML = "✊";
-  } else if (randomNumber === 2) {
-    computerChoice = "paper";
-    computerRoundWeapon.innerHTML = "✋";
-  } else {
-    computerChoice = "scissors";
-    computerRoundWeapon.innerHTML = "✌️";
-  }
+  const weapons = ["rock", "paper", "scissors"];
+  const randomNumber = randomInteger(0, 2);
+  computerChoice = weapons[randomNumber];
+  setWeaponInnerHTML(computerRoundWeapon, computerChoice);
   return computerChoice;
+}
+
+function setWeaponInnerHTML(element, weapon) {
+  element.innerHTML =
+    weapon === "rock"
+      ? "✊"
+      : weapon === "paper"
+      ? "✋"
+      : weapon === "scissors"
+      ? "✌️"
+      : "❔";
+  return element.innerHTML;
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -66,11 +68,9 @@ function playRound(playerSelection, computerSelection) {
 
   if (playerSelection === computerSelection) {
     headerRoundResult.innerText = "It's a tie!";
-    paragraphRoundResult.innerText =
-      playerSelection.charAt(0).toUpperCase() +
-      playerSelection.slice(1) +
-      " ties with " +
-      computerSelection;
+    paragraphRoundResult.innerText = `${
+      playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)
+    } ties with ${computerSelection}`;
 
     roundResult = "tie";
   } else if (
@@ -79,19 +79,15 @@ function playRound(playerSelection, computerSelection) {
     (playerSelection === "paper" && computerSelection === "rock")
   ) {
     headerRoundResult.innerText = "You won!";
-    paragraphRoundResult.innerText =
-      playerSelection.charAt(0).toUpperCase() +
-      playerSelection.slice(1) +
-      " beats " +
-      computerSelection;
+    paragraphRoundResult.innerText = `${
+      playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)
+    } beats ${computerSelection}`;
     roundResult = "won";
   } else {
     headerRoundResult.innerText = "You lost!";
-    paragraphRoundResult.innerText =
-      playerSelection.charAt(0).toUpperCase() +
-      playerSelection.slice(1) +
-      " is beaten by " +
-      computerSelection;
+    paragraphRoundResult.innerText = `${
+      playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)
+    } is beaten by ${computerSelection}`;
     roundResult = "lost";
   }
   updateScore(roundResult);
@@ -111,15 +107,7 @@ function updateScore(roundResult) {
 function checkWinner(userScore, computerScore) {
   if (userScore >= 5 || computerScore >= 5) {
     openPopup();
-
-    btnRock.removeEventListener("click", rockClickHandler);
-    btnRock.addEventListener("click", openPopup);
-
-    btnPaper.removeEventListener("click", paperClickHandler);
-    btnPaper.addEventListener("click", openPopup);
-
-    btnScissors.removeEventListener("click", scissorsClickHandler);
-    btnScissors.addEventListener("click", openPopup);
+    changeEventListener(true);
   }
 }
 
@@ -134,31 +122,41 @@ function openPopup() {
   }
 }
 
-overlay.addEventListener("click", () => {
+function changeEventListener(isChanging) {
+  btnRock.removeEventListener("click", rockClickHandler);
+  btnRock.removeEventListener("click", openPopup);
+  const rockHandler = isChanging ? openPopup : rockClickHandler;
+  btnRock.addEventListener("click", rockHandler);
+
+  btnPaper.removeEventListener("click", paperClickHandler);
+  btnPaper.removeEventListener("click", openPopup);
+  const paperHandler = isChanging ? openPopup : paperClickHandler;
+  btnPaper.addEventListener("click", paperHandler);
+
+  btnScissors.removeEventListener("click", scissorsClickHandler);
+  btnScissors.removeEventListener("click", openPopup);
+  const scissorsHandler = isChanging ? openPopup : scissorsClickHandler;
+  btnScissors.addEventListener("click", scissorsHandler);
+}
+
+overlay.addEventListener("click", overlayClickHandler);
+
+function overlayClickHandler() {
   popup.classList.remove("open-popup");
   overlay.classList.remove("active");
-});
+}
 
 function closePopup() {
   headerRoundResult.innerText = "Choose your weapon";
   paragraphRoundResult.innerText = "First to score 5 points wins the game";
-  userRoundWeapon.innerHTML = "❔";
-  computerRoundWeapon.innerHTML = "❔";
-
-  popup.classList.remove("open-popup");
-  overlay.classList.remove("active");
-
   userScore = 0;
-  userScoreNumber.innerHTML = userScore;
-
   computerScore = 0;
+
+  userScoreNumber.innerHTML = userScore;
   computerScoreNumber.innerHTML = computerScore;
 
-  btnRock.removeEventListener("click", openPopup);
-  btnPaper.removeEventListener("click", openPopup);
-  btnScissors.removeEventListener("click", openPopup);
-
-  btnRock.addEventListener("click", rockClickHandler);
-  btnPaper.addEventListener("click", paperClickHandler);
-  btnScissors.addEventListener("click", scissorsClickHandler);
+  setWeaponInnerHTML(userRoundWeapon, "sign");
+  setWeaponInnerHTML(computerRoundWeapon, "sign");
+  overlayClickHandler();
+  changeEventListener(false);
 }
