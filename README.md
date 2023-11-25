@@ -1,6 +1,6 @@
 # Rock-Paper-Scissors Game
 
-Welcome to the Rock-Paper-Scissors game! This simple web-based game allows users to play the classic rock-paper-scissors against the computer.
+Rock-Paper-Scissors is a simple web-based game that allows users to play the classic rock-paper-scissors against the computer. This game was made during the foundations course on the Odin Project.
 
 ## How to Play
 
@@ -29,10 +29,9 @@ Welcome to the Rock-Paper-Scissors game! This simple web-based game allows users
 
 ## Getting Started
 
-Play online [Rock-Paper-Scissors Game](https://yuriiprots.github.io/rock-paper-scissors/)
+Play online [Rock-Paper-Scissors](https://yuriiprots.github.io/rock-paper-scissors/)
 
 OR
 
 1. Clone the repository or download the ZIP file.
 2. Open the `index.html` file in your web browser.
-
